@@ -68,6 +68,8 @@ int nbVoisinsVivants(bool map[largeurCell][hauteurCell], int x, int y) {
 	return nb;
 }
 
+
+// Nombre d'itérations de lissage
 void etapeSimulation(bool mapOld[largeurCell][hauteurCell], bool mapNew[largeurCell][hauteurCell]) {
 	for (int x = 0; x < largeurCell; x++) {
 		for (int y = 0; y < hauteurCell; y++) {
@@ -92,6 +94,8 @@ void etapeSimulation(bool mapOld[largeurCell][hauteurCell], bool mapNew[largeurC
 	}
 }
 
+
+// Regroupe toutes les fonctions au dessus
 void genererMap(bool map[largeurCell][hauteurCell]) {
 	mapInit(map);	
 	bool mapNew[largeurCell][hauteurCell] = { {false} };
