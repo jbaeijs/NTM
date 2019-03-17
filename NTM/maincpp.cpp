@@ -33,8 +33,6 @@ float hPix = sf::VideoMode::getDesktopMode().height / hauteurCell;
 unsigned int depX = 20;
 unsigned int depY = 20;
 
-// Souris légèrement si tu es pd
-
 // Initialisation
 void mapInit(bool map[largeurCell][hauteurCell]) {
 	float nbAlea;
