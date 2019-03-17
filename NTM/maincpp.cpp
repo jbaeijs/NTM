@@ -4,7 +4,7 @@
 #include "Joueur.h"
 #include <iostream>
 #include <stdlib.h>
-
+//La vie
 using namespace std;
 
 // Largeur et Hauteur de l'écran
