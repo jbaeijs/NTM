@@ -18,8 +18,6 @@ int main() {
 
 	Map grille(0.40f, 4, 3, 3);
 
-	unsigned int lGrille = grille.getLargeurGrille();
-
 	bool map[grille.largeurGrille][grille.hauteurGrille] = { {false} };
 
 
@@ -27,14 +25,6 @@ int main() {
 
 	float lPix = sf::VideoMode::getDesktopMode().width / grille.getLargeurGrille();
 	float hPix = sf::VideoMode::getDesktopMode().height / grille.getHauteurGrille();
-
-	/*for (int x = 0; x < largeurCell; x++) {
-		for (int y = 0; y < hauteurCell; y++) {
-			cout << map[x][y];
-		}
-		cout << endl;
-	}
-	cout << endl << endl << endl;*/
 
 	vector<sf::RectangleShape> vRect;
 
@@ -115,8 +105,6 @@ int main() {
 
 		//joueur.Update(deltaTime);
 		//joueur.Draw(window);
-
-		
 
 		window.display();
 	}
