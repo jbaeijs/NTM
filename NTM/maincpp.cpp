@@ -7,6 +7,8 @@
 
 using namespace std;
 
+//certes
+
 // Largeur et Hauteur de l'écran
 unsigned int const Largeur = sf::VideoMode::getDesktopMode().width;
 unsigned int const Hauteur = sf::VideoMode::getDesktopMode().height;
