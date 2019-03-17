@@ -4,7 +4,11 @@
 #include "Joueur.h"
 #include <iostream>
 #include <stdlib.h>
+<<<<<<< HEAD
 //oui2
+=======
+//oui
+>>>>>>> master
 using namespace std;
 
 // Largeur et Hauteur de l'écran
