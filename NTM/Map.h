@@ -37,6 +37,8 @@ public:
 
 	void verifMap();
 
+	void placementPorte();
+
 	void genererMap();
 
 private:

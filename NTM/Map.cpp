@@ -1,4 +1,5 @@
 #include "Map.h"
+#include <stdlib.h>
 
 Map::Map(float chanceVieInit, unsigned int limiteMort, unsigned int limiteNaissance, unsigned int nbSimulations, unsigned int tailleMin)
 {
@@ -193,6 +194,22 @@ void Map::verifMap()
 	}
 }
 
+void Map::placementPorte()
+{
+	for (int x = 0; x < largeurGrille; x++) {
+		for (int y = 0; y < hauteurGrille; y++) {
+			if (map[x][y] == 2) {
+				if (((map[x - 1][y] == 2) && (map[x + 1][y] == 2)) && (map[x][y - 1] == 1) && (map[x][y + 1] == 1)) {
+					map[x][y] = 3;
+				}
+				else if (((map[x - 1][y] == 1) && (map[x + 1][y] == 1)) && (map[x][y - 1] == 2) && (map[x][y + 1] == 2)) {
+					map[x][y] = 3;
+				}
+			}
+		}
+	}
+}
+
 /*
 Appelé dans main.cpp
 Appel des autres fonctions de générations et de vérifications
@@ -217,4 +234,5 @@ void Map::genererMap()
 	}
 	floodFill(x, y);
 	verifMap();
+	placementPorte();
 }

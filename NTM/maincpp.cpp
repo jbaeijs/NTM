@@ -31,15 +31,27 @@ int main() {
 	float lPix = 10;
 	float hPix = 10;
 
+	for (int x = 0; x < grille.getLargeurGrille(); x++) {
+		for (int y = 0; y < grille.getHauteurGrille(); y++) {
+			cout << map[x][y];
+		}
+		cout << endl;
+	}
+
 	//Création et position des rectangle
 	vector<sf::RectangleShape> vRect;
 	for (int x = 0; x < grille.getLargeurGrille(); x++) {
 		for (int y = 0; y < grille.getHauteurGrille(); y++) {
-			if (map[x][y] == 2) {
+			if (map[x][y] != 1) {
 				sf::RectangleShape r;
 				r.setSize(sf::Vector2f(lPix, hPix));
 				r.setPosition((20 * y) + hPix, (20 * x) + lPix);
-				r.setFillColor(sf::Color::Red);
+				if (map[x][y] == 2) {
+					r.setFillColor(sf::Color::Red);
+				}
+				else if (map[x][y] == 3) {
+					r.setFillColor(sf::Color::Blue);
+				}
 				vRect.push_back(r);
 			}
 		}
