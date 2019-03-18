@@ -52,6 +52,9 @@ int main() {
 				else if (map[x][y] == 3) {
 					r.setFillColor(sf::Color::Blue);
 				}
+				else if (map[x][y] == 4) {
+					r.setFillColor(sf::Color::Yellow);
+				}
 				vRect.push_back(r);
 			}
 		}

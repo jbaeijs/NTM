@@ -215,6 +215,46 @@ void Map::placementPorte()
 }
 
 /*
+	TODO : A retravailler	
+*/
+void Map::placementTresor()
+{
+	/*int tresorMax = 10;
+	int tresorGen = 0;
+	for (int x = 0; x < largeurGrille; x++) {
+		for (int y = 0; y < hauteurGrille; y++) {
+			float alea = rand() % 100;
+			if ((map[x - 1][y] == 2) && (map[x + 1][y] == 1) && (map[x][y - 1] == 1) && (map[x][y + 1] == 1)) {
+				if (tresorGen < tresorMax) {
+					map[x][y] = 4;
+					tresorGen++;
+				}
+			}
+			else if ((map[x - 1][y] == 1) && (map[x + 1][y] == 2) && (map[x][y - 1] == 1) && (map[x][y + 1] == 1)) {
+				if (tresorGen < tresorMax) {
+					map[x][y] = 4;
+					tresorGen++;
+				}
+			}
+			else if ((map[x - 1][y] == 1) && (map[x + 1][y] == 1) && (map[x][y - 1] == 2) && (map[x][y + 1] == 1)) {
+				if (tresorGen < tresorMax) {
+					map[x][y] = 4;
+					tresorGen++;
+				}
+			}
+			else if ((map[x - 1][y] == 1) && (map[x + 1][y] == 1) && (map[x][y - 1] == 1) && (map[x][y + 1] == 2)) {
+				if (tresorGen < tresorMax) {
+					map[x][y] = 4;
+					tresorGen++;
+				}
+			}
+		}
+	}*/
+}
+
+
+
+/*
 Appelé dans main.cpp
 Appel des autres fonctions de générations et de vérifications
 */
@@ -239,4 +279,5 @@ void Map::genererMap()
 	floodFill(x, y);
 	verifMap();
 	placementPorte();
+	placementTresor();
 }
