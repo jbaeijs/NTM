@@ -20,21 +20,37 @@ int main() {
 
 	int map[grille.largeurGrille][grille.hauteurGrille] = { {0} };
 
+	grille.genererMap();
 
-	grille.genererMap(map);
+	grille.getMap(map);
 
-	float lPix = sf::VideoMode::getDesktopMode().width / grille.getLargeurGrille();
-	float hPix = sf::VideoMode::getDesktopMode().height / grille.getHauteurGrille();
+	float lPix = 10;
+	float hPix = 10;
+
+
+	for (int x = 0; x < grille.getLargeurGrille(); x++) {
+		for (int y = 0; y < grille.getHauteurGrille(); y++) {
+			cout << map[x][y];
+		}
+		cout << endl;
+	}
 
 	vector<sf::RectangleShape> vRect;
 
 	for (int x = 0; x < grille.getLargeurGrille(); x++) {
 		for (int y = 0; y < grille.getHauteurGrille(); y++) {
-			if (!map[x][y]) {
+			if (map[x][y] == 0) {
 				sf::RectangleShape r;
 				r.setSize(sf::Vector2f(lPix, hPix));
 				r.setPosition((20 * y) + hPix,(20 * x) + lPix);
 				r.setFillColor(sf::Color::White);
+				vRect.push_back(r);
+			}
+			else if (map[x][y] == 2) {
+				sf::RectangleShape r;
+				r.setSize(sf::Vector2f(lPix, hPix));
+				r.setPosition((20 * y) + hPix, (20 * x) + lPix);
+				r.setFillColor(sf::Color::Red);
 				vRect.push_back(r);
 			}
 		}
@@ -43,7 +59,7 @@ int main() {
 	//Création et position des rectangle
 
 	// Initialisation de la fenêtre
-	sf::RenderWindow window(sf::VideoMode(Largeur, Hauteur), "Deutschlandais fou", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(Largeur, Hauteur), "Deutschlandais fou");
 
 	// Texture et sprite du bouton quitter
 	sf::Texture quitter;
