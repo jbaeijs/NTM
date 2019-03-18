@@ -240,7 +240,7 @@ void Map::placementTresor()
 					map[x][y] = 4;
 					nbTresorCourExt++;
 				}
-			}
+			} 
 			else if ((map[x - 1][y] == 1) && (map[x + 1][y] == 1) && (map[x][y - 1] == 2) && (map[x][y + 1] == 1)) {
 				if ((alea < 0.1) && (nbTresorCourExt < nbTresorsMaxExt)) {
 					cout << alea / 100 << endl;
