@@ -25,10 +25,10 @@ public:
 	unsigned int const static largeurGrille = 50;
 	unsigned int const static hauteurGrille = 50;
 
-	void mapInit(bool map[largeurGrille][hauteurGrille]);
-	int nbVoisinsVivants(bool map[largeurGrille][hauteurGrille], int x, int y);
-	void etapeSimulation(bool mapOld[largeurGrille][hauteurGrille], bool mapNew[largeurGrille][hauteurGrille]);
-	void genererMap(bool map[largeurGrille][hauteurGrille]);
+	void mapInit(int map[largeurGrille][hauteurGrille]);
+	int nbVoisinsVivants(int map[largeurGrille][hauteurGrille], int x, int y);
+	void etapeSimulation(int mapOld[largeurGrille][hauteurGrille], int mapNew[largeurGrille][hauteurGrille]);
+	void genererMap(int map[largeurGrille][hauteurGrille]);
 
 private:
 

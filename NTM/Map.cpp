@@ -66,23 +66,23 @@ void Map::setNbSimulations(unsigned int nbSimulations)
 }
 
 //Initialisation map
-void Map::mapInit(bool map[largeurGrille][hauteurGrille])
+void Map::mapInit(int map[largeurGrille][hauteurGrille])
 {
 	float nbAlea;
 	for (int x = 0; x < this->largeurGrille; x++) {
 		for (int y = 0; y < this->hauteurGrille; y++) {
 			nbAlea = float(rand() % 100);
 			if ((nbAlea / 100) < this->chanceVieInit) {
-				map[x][y] = true;
+				map[x][y] = 1;
 			}
 			else {
-				map[x][y] = false;
+				map[x][y] = 0;
 			}
 		}
 	}
 }
 
-int Map::nbVoisinsVivants(bool map[largeurGrille][hauteurGrille], int x, int y)
+int Map::nbVoisinsVivants(int map[largeurGrille][hauteurGrille], int x, int y)
 {
 	int nb = 0;
 	for (int i = -1; i < 2; i++) {
@@ -102,35 +102,35 @@ int Map::nbVoisinsVivants(bool map[largeurGrille][hauteurGrille], int x, int y)
 	return nb;
 }
 
-void Map::etapeSimulation(bool mapOld[largeurGrille][hauteurGrille], bool mapNew[largeurGrille][hauteurGrille])
+void Map::etapeSimulation(int mapOld[largeurGrille][hauteurGrille], int mapNew[largeurGrille][hauteurGrille])
 {
 	for (int x = 0; x < this->largeurGrille; x++) {
 		for (int y = 0; y < this->hauteurGrille; y++) {
 			int nbVoisins = nbVoisinsVivants(mapOld, x, y);
 			if (mapOld[x][y]) {
 				if (nbVoisins < limiteMort) {
-					mapNew[x][y] = false;
+					mapNew[x][y] = 0;
 				}
 				else {
-					mapNew[x][y] = true;
+					mapNew[x][y] = 1;
 				}
 			}
 			else {
 				if (nbVoisins > limiteNaissance) {
-					mapNew[x][y] = true;
+					mapNew[x][y] = 1;
 				}
 				else {
-					mapNew[x][y] = false;
+					mapNew[x][y] = 0;
 				}
 			}
 		}
 	}
 }
 
-void Map::genererMap(bool map[largeurGrille][hauteurGrille])
+void Map::genererMap(int map[largeurGrille][hauteurGrille])
 {
 	mapInit(map);
-	bool mapNew[this->largeurGrille][this->hauteurGrille] = { {false} };
+	int mapNew[this->largeurGrille][this->hauteurGrille] = { {false} };
 	for (int i = 0; i < nbSimulations; i++) {
 		etapeSimulation(map, mapNew);
 		for (int x = 0; x < this->largeurGrille; x++) {

@@ -18,7 +18,7 @@ int main() {
 
 	Map grille(0.40f, 4, 3, 3);
 
-	bool map[grille.largeurGrille][grille.hauteurGrille] = { {false} };
+	int map[grille.largeurGrille][grille.hauteurGrille] = { {0} };
 
 
 	grille.genererMap(map);
