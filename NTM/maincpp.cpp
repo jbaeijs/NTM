@@ -14,37 +14,39 @@ unsigned int const Largeur = sf::VideoMode::getDesktopMode().width;
 unsigned int const Hauteur = sf::VideoMode::getDesktopMode().height;
 
 int main() {
+	// Réinitialiser le seed de la map
 	srand(time(NULL));
+
+	// Initialisation classe map
+	Map grille(0.40f, 4, 3, 3, 800);
+
 	// Tableau des cellules
-
-	Map grille(0.40f, 4, 3, 3);
-
 	int map[grille.largeurGrille][grille.hauteurGrille] = { {0} };
 
+	// Générer et récupérer la map
+	grille.genererMap();
+	grille.getMap(map);
 
-	grille.genererMap(map);
+	// Taille d'affichage des pixels
+	float lPix = 10;
+	float hPix = 10;
 
-	float lPix = sf::VideoMode::getDesktopMode().width / grille.getLargeurGrille();
-	float hPix = sf::VideoMode::getDesktopMode().height / grille.getHauteurGrille();
-
+	//Création et position des rectangle
 	vector<sf::RectangleShape> vRect;
-
 	for (int x = 0; x < grille.getLargeurGrille(); x++) {
 		for (int y = 0; y < grille.getHauteurGrille(); y++) {
-			if (!map[x][y]) {
+			if (map[x][y] == 2) {
 				sf::RectangleShape r;
 				r.setSize(sf::Vector2f(lPix, hPix));
-				r.setPosition((20 * y) + hPix,(20 * x) + lPix);
-				r.setFillColor(sf::Color::White);
+				r.setPosition((20 * y) + hPix, (20 * x) + lPix);
+				r.setFillColor(sf::Color::Red);
 				vRect.push_back(r);
 			}
 		}
 	}
 
-	//Création et position des rectangle
-
 	// Initialisation de la fenêtre
-	sf::RenderWindow window(sf::VideoMode(Largeur, Hauteur), "Deutschlandais fou", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(Largeur, Hauteur), "Deutschlandais fou");
 
 	// Texture et sprite du bouton quitter
 	sf::Texture quitter;
@@ -61,6 +63,15 @@ int main() {
 
 	unsigned int const nbObjets = 10;
 
+	// Police style seigneur des anneaux
+	sf::Font lotr;
+	if (!lotr.loadFromFile("assets/tengwarc.ttf"))
+		return EXIT_FAILURE;
+
+	sf::Font lotr2;
+	if (!lotr2.loadFromFile("assets/lotr.ttf"))
+		return EXIT_FAILURE;
+
 	//liste des différents objets
 
 	Objet *tabObjets[nbObjets];
@@ -70,13 +81,14 @@ int main() {
 	}
 
 	// Temps avant changement de sprites (animation)
-	float deltaTime = 0.0f;
-	sf::Clock horloge;
+	/*float deltaTime = 0.0f;
+	sf::Clock horloge;*/
 
 	while (window.isOpen()) {
 
 		//deltaTime = horloge.restart().asSeconds();
 
+		// Récupérer position de la souris
 		sf::Vector2i posSouris = sf::Mouse::getPosition(window);
 		sf::Vector2f posSourisF(static_cast<float>(posSouris.x), static_cast<float>(posSouris.y));
 
@@ -108,14 +120,18 @@ int main() {
 
 		window.clear();
 
+		//Affichage bouton quitter
 		window.draw(sQuitter);
 
+		// Affichage map
 		for (auto j = vRect.begin(); j != vRect.end(); j++) {
 			window.draw(*j);
 		}
 
 		//joueur.Update(deltaTime);
 		//joueur.Draw(window);
+
+		// Affichage textes
 		window.draw(angband);
 		window.draw(angband2);
 

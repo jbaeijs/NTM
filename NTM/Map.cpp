@@ -1,12 +1,12 @@
 #include "Map.h"
 
-
-Map::Map(float chanceVieInit, unsigned int limiteMort, unsigned int limiteNaissance, unsigned int nbSimulations)
+Map::Map(float chanceVieInit, unsigned int limiteMort, unsigned int limiteNaissance, unsigned int nbSimulations, unsigned int tailleMin)
 {
 	setChanceVieInit(chanceVieInit);
 	setLimiteMort(limiteMort);
 	setLimiteNaissance(limiteNaissance);
 	setNbSimulations(nbSimulations);
+	this->tailleMin = tailleMin;
 }
 
 Map::~Map()
@@ -44,6 +44,15 @@ unsigned int Map::getNbSimulations()
 	return this->nbSimulations;
 }
 
+void Map::getMap(int map[largeurGrille][hauteurGrille])
+{
+	for (int x = 0; x < largeurGrille; x++) {
+		for (int y = 0; y < hauteurGrille; y++) {
+			map[x][y] = this->map[x][y];
+		}
+	}
+}
+
 //Setters
 void Map::setChanceVieInit(float chanceVieInit)
 {
@@ -65,8 +74,10 @@ void Map::setNbSimulations(unsigned int nbSimulations)
 	this->nbSimulations = nbSimulations;
 }
 
-//Initialisation map
-void Map::mapInit(int map[largeurGrille][hauteurGrille])
+/*
+Initialisation  de la map
+*/
+void Map::mapInit()
 {
 	float nbAlea;
 	for (int x = 0; x < this->largeurGrille; x++) {
@@ -82,7 +93,10 @@ void Map::mapInit(int map[largeurGrille][hauteurGrille])
 	}
 }
 
-int Map::nbVoisinsVivants(int map[largeurGrille][hauteurGrille], int x, int y)
+/*
+Calcul du nombre de voisins vivants de la celulle à la position x et y de la map[][]
+*/
+int Map::nbVoisinsVivants(int x, int y)
 {
 	int nb = 0;
 	for (int i = -1; i < 2; i++) {
@@ -99,15 +113,19 @@ int Map::nbVoisinsVivants(int map[largeurGrille][hauteurGrille], int x, int y)
 			}
 		}
 	}
-	return nb;
+	return nb; 
 }
 
-void Map::etapeSimulation(int mapOld[largeurGrille][hauteurGrille], int mapNew[largeurGrille][hauteurGrille])
+/*
+Affinage des voisins de chaque cellule
+Répété nbSimulations fois
+*/
+void Map::etapeSimulation(int mapNew[largeurGrille][hauteurGrille])
 {
 	for (int x = 0; x < this->largeurGrille; x++) {
 		for (int y = 0; y < this->hauteurGrille; y++) {
-			int nbVoisins = nbVoisinsVivants(mapOld, x, y);
-			if (mapOld[x][y]) {
+			int nbVoisins = nbVoisinsVivants(x, y);
+			if (map[x][y]) {
 				if (nbVoisins < limiteMort) {
 					mapNew[x][y] = 0;
 				}
@@ -127,16 +145,76 @@ void Map::etapeSimulation(int mapOld[largeurGrille][hauteurGrille], int mapNew[l
 	}
 }
 
-void Map::genererMap(int map[largeurGrille][hauteurGrille])
+/*
+Flood fill à partir de la première celulle vivante
+*/
+void Map::floodFill(int x, int y)
 {
-	mapInit(map);
+	if (map[x][y] == 0) {
+		map[x][y] = 2;
+
+		floodFill(x + 1, y);
+		floodFill(x - 1, y);
+		floodFill(x, y + 1);
+		floodFill(x, y - 1);
+	}
+}
+
+/*
+Vérification de la taille de la map après le flood fill
+Map générée à nouveau si pas assez grande
+*/
+void Map::verifMap()
+{
+	int nb = 0;
+	for (int x = 0; x < largeurGrille; x++) {
+		for (int y = 0; y < hauteurGrille; y++) {
+			if (map[x][y] == 2) {
+				nb ++;
+			}
+		}
+	}
+	if (nb < tailleMin) {
+		for (int x = 0; x < largeurGrille; x++) {
+			for (int y = 0; y < hauteurGrille; y++) {
+				map[x][y] = 0;
+			}
+		}
+		genererMap();
+	}
+	else {
+		for (int x = 0; x < largeurGrille; x++) {
+			for (int y = 0; y < hauteurGrille; y++) {
+				if (map[x][y] == 0) {
+					map[x][y] = 1;
+				}
+			}
+		}
+	}
+}
+
+/*
+Appelé dans main.cpp
+Appel des autres fonctions de générations et de vérifications
+*/
+void Map::genererMap()
+{
+	mapInit();
 	int mapNew[this->largeurGrille][this->hauteurGrille] = { {false} };
 	for (int i = 0; i < nbSimulations; i++) {
-		etapeSimulation(map, mapNew);
+		etapeSimulation(mapNew);
 		for (int x = 0; x < this->largeurGrille; x++) {
 			for (int y = 0; y < this->hauteurGrille; y++) {
 				map[x][y] = mapNew[x][y];
 			}
 		}
 	}
+	int x = 0;
+	int y = 0;
+	while (map[x][y] != 0) {
+		x++;
+		y++;
+	}
+	floodFill(x, y);
+	verifMap();
 }
