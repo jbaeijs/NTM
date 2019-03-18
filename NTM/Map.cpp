@@ -200,10 +200,14 @@ void Map::placementPorte()
 		for (int y = 0; y < hauteurGrille; y++) {
 			if (map[x][y] == 2) {
 				if (((map[x - 1][y] == 2) && (map[x + 1][y] == 2)) && (map[x][y - 1] == 1) && (map[x][y + 1] == 1)) {
-					map[x][y] = 3;
+					if (((map[x - 2][y] != 3) && (map[x + 2][y] != 3)) && (map[x][y - 1] == 1) && (map[x][y + 1] == 1)) {
+						map[x][y] = 3;
+					}
 				}
 				else if (((map[x - 1][y] == 1) && (map[x + 1][y] == 1)) && (map[x][y - 1] == 2) && (map[x][y + 1] == 2)) {
-					map[x][y] = 3;
+					if (((map[x - 1][y] != 3) && (map[x + 1][y] != 3)) && (map[x][y - 2] == 3) && (map[x][y + 2] == 3)) {
+						map[x][y] = 3;
+					}
 				}
 			}
 		}
