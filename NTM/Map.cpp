@@ -1,5 +1,6 @@
 #include "Map.h"
 #include <stdlib.h>
+#include <SFML/Window.hpp>
 
 Map::Map(float chanceVieInit, unsigned int limiteMort, unsigned int limiteNaissance, unsigned int nbSimulations, unsigned int tailleMin)
 {
@@ -214,42 +215,53 @@ void Map::placementPorte()
 	}
 }
 
-/*
-	TODO : A retravailler	
-*/
 void Map::placementTresor()
 {
-	/*int tresorMax = 10;
-	int tresorGen = 0;
-	for (int x = 0; x < largeurGrille; x++) {
-		for (int y = 0; y < hauteurGrille; y++) {
-			float alea = rand() % 100;
+	srand(time(NULL));
+	unsigned int nbTresorsMaxExt = 10;
+	unsigned int nbTresorCourExt = 0;
+	unsigned int nbTresorsMaxInt = 5;
+	unsigned int nbTresorsCourInt = 0;
+
+	for (int x = 0; x < largeurGrille; x += 2) {
+		for (int y = 0; y < hauteurGrille; y += 2) {
+			float alea = float(rand() % 100);
+			alea = alea / 100;
 			if ((map[x - 1][y] == 2) && (map[x + 1][y] == 1) && (map[x][y - 1] == 1) && (map[x][y + 1] == 1)) {
-				if (tresorGen < tresorMax) {
+				cout << alea << endl;
+				if ((alea < 0.1) && (nbTresorCourExt < nbTresorsMaxExt)) {
 					map[x][y] = 4;
-					tresorGen++;
+					nbTresorCourExt++;
 				}
 			}
 			else if ((map[x - 1][y] == 1) && (map[x + 1][y] == 2) && (map[x][y - 1] == 1) && (map[x][y + 1] == 1)) {
-				if (tresorGen < tresorMax) {
+				if ((alea < 0.1) && (nbTresorCourExt < nbTresorsMaxExt)) {
+					cout << alea << endl;
 					map[x][y] = 4;
-					tresorGen++;
+					nbTresorCourExt++;
 				}
 			}
 			else if ((map[x - 1][y] == 1) && (map[x + 1][y] == 1) && (map[x][y - 1] == 2) && (map[x][y + 1] == 1)) {
-				if (tresorGen < tresorMax) {
+				if ((alea < 0.1) && (nbTresorCourExt < nbTresorsMaxExt)) {
+					cout << alea / 100 << endl;
 					map[x][y] = 4;
-					tresorGen++;
 				}
 			}
 			else if ((map[x - 1][y] == 1) && (map[x + 1][y] == 1) && (map[x][y - 1] == 1) && (map[x][y + 1] == 2)) {
-				if (tresorGen < tresorMax) {
+				if ((alea < 0.1) && (nbTresorCourExt < nbTresorsMaxExt)) {
+					cout << alea / 100 << endl;
 					map[x][y] = 4;
-					tresorGen++;
+					nbTresorCourExt++;
+				}
+			}
+			else {
+				if ((alea <= 0.01) && (nbTresorsCourInt < nbTresorsMaxInt) && (map[x][y] == 2)) {
+					map[x][y] = 4;
+					nbTresorsCourInt++;
 				}
 			}
 		}
-	}*/
+	}
 }
 
 

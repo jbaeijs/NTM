@@ -18,7 +18,7 @@ int main() {
 	srand(time(NULL));
 
 	// Initialisation classe map
-	Map grille(0.40f, 4, 3, 3, 800);
+	Map grille(0.40f, 4, 3, 3, 900);
 
 	// Tableau des cellules
 	int map[grille.largeurGrille][grille.hauteurGrille] = { {0} };
