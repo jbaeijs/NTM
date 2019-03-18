@@ -3,6 +3,7 @@
 #include "Animation.h"
 #include "Joueur.h"
 #include "Map.h"
+#include "Objet.h"
 #include <iostream>
 #include <stdlib.h>
 
@@ -58,24 +59,15 @@ int main() {
 		return EXIT_FAILURE;
 	Joueur joueur(&textureJoueur, sf::Vector2u(9, 4), 0.1f, 150.0f);
 
-	sf::Font lotr;
-	if (!lotr.loadFromFile("assets/tengwarc.ttf"))
-		return EXIT_FAILURE;
+	unsigned int const nbObjets = 10;
 
-	sf::Font lotr2;
-	if (!lotr2.loadFromFile("assets/lotr.ttf"))
-		return EXIT_FAILURE;
+	//liste des différents objets
 
-	sf::Text angband;
-	angband.setFont(lotr2);
-	angband.setString("Angband");
-	angband.setPosition((float)Largeur - 450, 600);
-
-	sf::Text angband2;
-	angband2.setFont(lotr);
-	angband2.setString("écrire pour rien mauis vraiment ");
-	angband2.setCharacterSize(62);
-	angband2.setPosition((float)Largeur - 500, 630);
+	Objet *tabObjets[nbObjets];
+	for (int i = 0; i < nbObjets; i++)
+	{
+		
+	}
 
 	// Temps avant changement de sprites (animation)
 	float deltaTime = 0.0f;
