@@ -61,25 +61,6 @@ int main() {
 		return EXIT_FAILURE;
 	Joueur joueur(&textureJoueur, sf::Vector2u(9, 4), 0.1f, 150.0f);
 
-	unsigned int const nbObjets = 10;
-
-	// Police style seigneur des anneaux
-	sf::Font lotr;
-	if (!lotr.loadFromFile("assets/tengwarc.ttf"))
-		return EXIT_FAILURE;
-
-	sf::Font lotr2;
-	if (!lotr2.loadFromFile("assets/lotr.ttf"))
-		return EXIT_FAILURE;
-
-	//liste des différents objets
-
-	Objet *tabObjets[nbObjets];
-	for (int i = 0; i < nbObjets; i++)
-	{
-		
-	}
-
 	// Temps avant changement de sprites (animation)
 	/*float deltaTime = 0.0f;
 	sf::Clock horloge;*/
