@@ -131,10 +131,6 @@ int main() {
 		//joueur.Update(deltaTime);
 		//joueur.Draw(window);
 
-		// Affichage textes
-		window.draw(angband);
-		window.draw(angband2);
-
 		window.display();
 	}
 
