@@ -58,6 +58,25 @@ int main() {
 		return EXIT_FAILURE;
 	Joueur joueur(&textureJoueur, sf::Vector2u(9, 4), 0.1f, 150.0f);
 
+	sf::Font lotr;
+	if (!lotr.loadFromFile("assets/tengwarc.ttf"))
+		return EXIT_FAILURE;
+
+	sf::Font lotr2;
+	if (!lotr2.loadFromFile("assets/lotr.ttf"))
+		return EXIT_FAILURE;
+
+	sf::Text angband;
+	angband.setFont(lotr2);
+	angband.setString("Angband");
+	angband.setPosition((float)Largeur - 450, 600);
+
+	sf::Text angband2;
+	angband2.setFont(lotr);
+	angband2.setString("écrire pour rien mauis vraiment ");
+	angband2.setCharacterSize(62);
+	angband2.setPosition((float)Largeur - 500, 630);
+
 	// Temps avant changement de sprites (animation)
 	float deltaTime = 0.0f;
 	sf::Clock horloge;
@@ -105,6 +124,8 @@ int main() {
 
 		//joueur.Update(deltaTime);
 		//joueur.Draw(window);
+		window.draw(angband);
+		window.draw(angband2);
 
 		window.display();
 	}
