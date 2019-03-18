@@ -13,40 +13,28 @@ unsigned int const Largeur = sf::VideoMode::getDesktopMode().width;
 unsigned int const Hauteur = sf::VideoMode::getDesktopMode().height;
 
 int main() {
+	// Réinitialiser le seed de la map
 	srand(time(NULL));
+
+	// Initialisation classe map
+	Map grille(0.40f, 4, 3, 3, 800);
+
 	// Tableau des cellules
-
-	Map grille(0.40f, 4, 3, 3);
-
 	int map[grille.largeurGrille][grille.hauteurGrille] = { {0} };
 
+	// Générer et récupérer la map
 	grille.genererMap();
-
 	grille.getMap(map);
 
+	// Taille d'affichage des pixels
 	float lPix = 10;
 	float hPix = 10;
 
-
-	for (int x = 0; x < grille.getLargeurGrille(); x++) {
-		for (int y = 0; y < grille.getHauteurGrille(); y++) {
-			cout << map[x][y];
-		}
-		cout << endl;
-	}
-
+	//Création et position des rectangle
 	vector<sf::RectangleShape> vRect;
-
 	for (int x = 0; x < grille.getLargeurGrille(); x++) {
 		for (int y = 0; y < grille.getHauteurGrille(); y++) {
-			if (map[x][y] == 0) {
-				sf::RectangleShape r;
-				r.setSize(sf::Vector2f(lPix, hPix));
-				r.setPosition((20 * y) + hPix,(20 * x) + lPix);
-				r.setFillColor(sf::Color::White);
-				vRect.push_back(r);
-			}
-			else if (map[x][y] == 2) {
+			if (map[x][y] == 2) {
 				sf::RectangleShape r;
 				r.setSize(sf::Vector2f(lPix, hPix));
 				r.setPosition((20 * y) + hPix, (20 * x) + lPix);
@@ -55,8 +43,6 @@ int main() {
 			}
 		}
 	}
-
-	//Création et position des rectangle
 
 	// Initialisation de la fenêtre
 	sf::RenderWindow window(sf::VideoMode(Largeur, Hauteur), "Deutschlandais fou");
@@ -74,6 +60,7 @@ int main() {
 		return EXIT_FAILURE;
 	Joueur joueur(&textureJoueur, sf::Vector2u(9, 4), 0.1f, 150.0f);
 
+	// Police style seigneur des anneaux
 	sf::Font lotr;
 	if (!lotr.loadFromFile("assets/tengwarc.ttf"))
 		return EXIT_FAILURE;
@@ -94,13 +81,14 @@ int main() {
 	angband2.setPosition((float)Largeur - 500, 630);
 
 	// Temps avant changement de sprites (animation)
-	float deltaTime = 0.0f;
-	sf::Clock horloge;
+	/*float deltaTime = 0.0f;
+	sf::Clock horloge;*/
 
 	while (window.isOpen()) {
 
 		//deltaTime = horloge.restart().asSeconds();
 
+		// Récupérer position de la souris
 		sf::Vector2i posSouris = sf::Mouse::getPosition(window);
 		sf::Vector2f posSourisF(static_cast<float>(posSouris.x), static_cast<float>(posSouris.y));
 
@@ -132,14 +120,18 @@ int main() {
 
 		window.clear();
 
+		//Affichage bouton quitter
 		window.draw(sQuitter);
 
+		// Affichage map
 		for (auto j = vRect.begin(); j != vRect.end(); j++) {
 			window.draw(*j);
 		}
 
 		//joueur.Update(deltaTime);
 		//joueur.Draw(window);
+
+		// Affichage textes
 		window.draw(angband);
 		window.draw(angband2);
 

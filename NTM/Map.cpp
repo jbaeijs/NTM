@@ -1,11 +1,12 @@
 #include "Map.h"
 
-Map::Map(float chanceVieInit, unsigned int limiteMort, unsigned int limiteNaissance, unsigned int nbSimulations)
+Map::Map(float chanceVieInit, unsigned int limiteMort, unsigned int limiteNaissance, unsigned int nbSimulations, unsigned int tailleMin)
 {
 	setChanceVieInit(chanceVieInit);
 	setLimiteMort(limiteMort);
 	setLimiteNaissance(limiteNaissance);
 	setNbSimulations(nbSimulations);
+	this->tailleMin = tailleMin;
 }
 
 Map::~Map()
@@ -73,7 +74,9 @@ void Map::setNbSimulations(unsigned int nbSimulations)
 	this->nbSimulations = nbSimulations;
 }
 
-//Initialisation map
+/*
+Initialisation  de la map
+*/
 void Map::mapInit()
 {
 	float nbAlea;
@@ -90,6 +93,9 @@ void Map::mapInit()
 	}
 }
 
+/*
+Calcul du nombre de voisins vivants de la celulle à la position x et y de la map[][]
+*/
 int Map::nbVoisinsVivants(int x, int y)
 {
 	int nb = 0;
@@ -110,6 +116,10 @@ int Map::nbVoisinsVivants(int x, int y)
 	return nb; 
 }
 
+/*
+Affinage des voisins de chaque cellule
+Répété nbSimulations fois
+*/
 void Map::etapeSimulation(int mapNew[largeurGrille][hauteurGrille])
 {
 	for (int x = 0; x < this->largeurGrille; x++) {
@@ -135,6 +145,9 @@ void Map::etapeSimulation(int mapNew[largeurGrille][hauteurGrille])
 	}
 }
 
+/*
+Flood fill à partir de la première celulle vivante
+*/
 void Map::floodFill(int x, int y)
 {
 	if (map[x][y] == 0) {
@@ -147,6 +160,43 @@ void Map::floodFill(int x, int y)
 	}
 }
 
+/*
+Vérification de la taille de la map après le flood fill
+Map générée à nouveau si pas assez grande
+*/
+void Map::verifMap()
+{
+	int nb = 0;
+	for (int x = 0; x < largeurGrille; x++) {
+		for (int y = 0; y < hauteurGrille; y++) {
+			if (map[x][y] == 2) {
+				nb ++;
+			}
+		}
+	}
+	if (nb < tailleMin) {
+		for (int x = 0; x < largeurGrille; x++) {
+			for (int y = 0; y < hauteurGrille; y++) {
+				map[x][y] = 0;
+			}
+		}
+		genererMap();
+	}
+	else {
+		for (int x = 0; x < largeurGrille; x++) {
+			for (int y = 0; y < hauteurGrille; y++) {
+				if (map[x][y] == 0) {
+					map[x][y] = 1;
+				}
+			}
+		}
+	}
+}
+
+/*
+Appelé dans main.cpp
+Appel des autres fonctions de générations et de vérifications
+*/
 void Map::genererMap()
 {
 	mapInit();
@@ -165,6 +215,6 @@ void Map::genererMap()
 		x++;
 		y++;
 	}
-	cout << x << y << endl;
 	floodFill(x, y);
+	verifMap();
 }

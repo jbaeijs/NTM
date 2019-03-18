@@ -8,7 +8,7 @@ class Map
 {
 // Fonctions
 public:
-	Map(float chanceVieInit, unsigned int limiteMort, unsigned int limiteNaissance, unsigned int nbSimulations);
+	Map(float chanceVieInit, unsigned int limiteMort, unsigned int limiteNaissance, unsigned int nbSimulations, unsigned int tailleMin);
 	~Map();
 
 	unsigned int const static largeurGrille = 50;
@@ -54,5 +54,6 @@ private:
 
 	unsigned int nbSimulations;
 
+	unsigned int tailleMin;
 };
 
