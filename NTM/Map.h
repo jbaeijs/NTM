@@ -35,6 +35,8 @@ public:
 	
 	void floodFill(int x, int y);
 
+	void verifMap();
+
 	void genererMap();
 
 private:
