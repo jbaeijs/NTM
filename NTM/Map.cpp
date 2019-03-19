@@ -280,7 +280,7 @@ void Map::placementEntreeSortie()
 					entree = 1;
 				}
 			}
-			else if ((map[x][y] == 2) && sortie == 0) {
+			if ((map[x][y] == 2) && sortie == 0) {
 				if (alea < 0.4) {
 					map[x][y] = 6;
 					sortie = 1;
