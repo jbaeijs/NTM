@@ -35,10 +35,11 @@ public:
 	
 	void floodFill(int x, int y);
 
-	void verifMap();
+	bool verifMap();
 
 	void placementPorte();
 	void placementTresor();
+	void placementEntreeSortie();
 
 	void genererMap();
 

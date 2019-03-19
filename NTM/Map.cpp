@@ -166,7 +166,7 @@ void Map::floodFill(int x, int y)
 Vérification de la taille de la map après le flood fill
 Map générée à nouveau si pas assez grande
 */
-void Map::verifMap()
+bool Map::verifMap()
 {
 	int nb = 0;
 	for (int x = 0; x < largeurGrille; x++) {
@@ -182,7 +182,7 @@ void Map::verifMap()
 				map[x][y] = 0;
 			}
 		}
-		genererMap();
+		return false;
 	}
 	else {
 		for (int x = 0; x < largeurGrille; x++) {
@@ -192,6 +192,7 @@ void Map::verifMap()
 				}
 			}
 		}
+		return true;
 	}
 }
 
@@ -264,6 +265,31 @@ void Map::placementTresor()
 	}
 }
 
+void Map::placementEntreeSortie()
+{
+	srand(time(NULL));
+	int entree = 0;
+	int sortie = 0;
+	for (int x = 0; x < largeurGrille; x += 10) {
+		for (int y = 0; y < hauteurGrille; y += 10) {
+			float alea = float(rand() % 100);
+			alea = alea / 100;
+			if ((map[x][y] == 2) && entree == 0) {
+				if (alea < 0.4) {
+					map[x][y] = 5;
+					entree = 1;
+				}
+			}
+			else if ((map[x][y] == 2) && sortie == 0) {
+				if (alea < 0.4) {
+					map[x][y] = 6;
+					sortie = 1;
+				}
+			}
+		}
+	}
+}
+
 
 
 /*
@@ -288,8 +314,16 @@ void Map::genererMap()
 		x++;
 		y++;
 	}
+	bool mapVerif;
+
 	floodFill(x, y);
-	verifMap();
-	placementPorte();
-	placementTresor();
+	mapVerif = verifMap();
+	if (mapVerif) {
+		placementPorte();
+		placementTresor();
+		placementEntreeSortie();
+	}
+	else {
+		genererMap();
+	}
 }
