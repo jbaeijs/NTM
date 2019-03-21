@@ -126,15 +126,19 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Arme.cpp" />
     <ClCompile Include="Joueur.cpp" />
+    <ClCompile Include="Livre.cpp" />
     <ClCompile Include="maincpp.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Nourriture.cpp" />
     <ClCompile Include="Objet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Arme.h" />
     <ClInclude Include="Joueur.h" />
+    <ClInclude Include="Livre.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Nourriture.h" />
     <ClInclude Include="Objet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

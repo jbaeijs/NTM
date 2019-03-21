@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Objet.h"
 #include "Arme.h"
+#include "Nourriture.h"
 #include <iostream>
 #include <stdlib.h>
 #include <string>
@@ -77,7 +78,7 @@ int main() {
 										 6, 9, 15, 21, 14, 20, 24,
 										 3, 8, 13, 9, 16, 1, 16, 18, 20,
 										 14, 18, 7, 19, 22, 6, 11, 12, 5, 3,
-										 12, 14, 3, 30};
+										 12, 14, 3, 35};
 	vector <float> poidsArmes = { 0.5f, 1.75f, 3.75f, 3.0f, 5.0f, 12.5f, 
 								  2.25f, 2.75f, 3.5f, 5.25f, 4.25f, 5.75f, 7.0f,
 								  0.1f, 0.2f, 0.5f, 0.4f, 0.8f, 0.25f, 7.25f, 8.5f, 9.75f,
@@ -119,54 +120,52 @@ int main() {
 		if (tempAttribut <= 4)
 		{
 			attributAjouter = "rouillé"; //moyenne 3
-			modifNiveau = (rand()%5)+2;
+			modifNiveau -= (rand()%3)+2;
 			modif -= (modifNiveau * 10);
 		}
 		else if (tempAttribut <= 6)
 		{
 			attributAjouter = "cassé"; //moyenne 7
-			modifNiveau = (rand() % 9) + 6;
+			modifNiveau -= (rand() % 3) + 6;
 			modif -= (modifNiveau * 10);
 		}
 		else if (tempAttribut <= 9)
 		{
 			attributAjouter = "ébréché"; //moyenne 6
-			modifNiveau = (rand() % 8) + 5;
+			modifNiveau -= (rand() %3) + 5;
 			modif -= (modifNiveau * 10);
 		}
 		else if (tempAttribut <= 13)
 		{
 			attributAjouter = "tordu"; //moyenne 4
-			modifNiveau = (rand() % 6) + 3;
+			modifNiveau -= (rand() % 3) + 3;
 			modif -= (modifNiveau * 10);
 		}
 		else if (tempAttribut <= 18)
 		{
 			attributAjouter = "aiguisé"; //moyenne 3
-			modifNiveau = (rand() % 5) + 2;
+			modifNiveau += (rand() % 3) + 2;
 			modif += (modifNiveau * 10);
 		}
 		else if (tempAttribut <= 19)
 		{
 			attributAjouter = "en mithril";
-			modifNiveau = (rand() % 10) + 7; //moyenne 8
+			modifNiveau += (rand() % 3) + 7; //moyenne 8
 			modif += (modifNiveau * 10);
 		}
 		else
 			attributAjouter = "";
-
-		tempNiveau += modifNiveau;
 			
 		if (tempSpecial == 0)
 		{
 			specialAjouter = "elfique"; //moyenne 12
-			modifNiveau -= (rand() % 14) + 11;
+			modifNiveau += (rand() % 3) + 11;
 			modif += (modifNiveau * 10);
 		}
 		else if (tempSpecial <= 4)
 		{
 			specialAjouter = "maudit"; //moyenne 5
-			modifNiveau -= (rand() % 7) + 4;
+			modifNiveau -= (rand() % 3) + 4;
 			modif -= (modifNiveau * 10);
 		}
 		else if (tempSpecial <= 9)
@@ -181,15 +180,17 @@ int main() {
 			modif *= 2;
 		}
 		modif /= 2;
+		
 		tempNiveau += modifNiveau;
 
 		if (tempNiveau > 0 && tempNiveau <= 50 && prixArmes[tempPos] * modif / 100 <= 1000 && prixArmes[tempPos] * modif / 100 > 0)
 		{
 			if ((i%50 > 2 &&tempNiveau >= (i%50 - 5) && tempNiveau <= (i%50 + 5)) || (i%50<=5 && tempNiveau == i%50+1))
 			{
+				//cout << nomArmes[tempPos] << " " << attributAjouter << " " << specialAjouter << " " << modifNiveau << endl;
 				Ajouter.setnom(nomArmes[tempPos]);
 				Ajouter.setattribut(attributAjouter);
-				Ajouter.setdegats(degatsArmes[tempPos][0]*modif/100, degatsArmes[tempPos][1] * modif / 100);
+				Ajouter.setdegats(degatsArmes[tempPos][0], degatsArmes[tempPos][1]);
 				Ajouter.setnbMains(nbMainsArmes[tempPos]);
 				Ajouter.setniveau(tempNiveau);
 				Ajouter.setpoids(poidsArmes[tempPos]);
@@ -204,6 +205,30 @@ int main() {
 		else
 			i--;
 	}
+
+	for (int i = 0; i < nbObjets; i++)
+		cout << listeArmes[i].getnom() << " "<<listeArmes[i].getattribut() << " " << listeArmes[i].getspecial() << "\t" <<listeArmes[i].getniveau() << endl;
+
+	//NOURRITURE
+	vector<string> nomNourritures = {"outre d'eau", "bouteille de vin", "morceau de pain", "pain rassi",
+									 "viande", "liqueur orque", "fromage", "part de gâteau", "chair humaine", "rations",
+									 "lembas"};
+	vector<unsigned int> nbRationsNourritures = {1,1,2,1,3,1,2,2,2,1,4};
+	vector<unsigned int> empoisonneNourritures = {0,0,0,1,0,1,0,0,9,0,0};
+	vector<unsigned int> prixNourritures = {1,2,1,0,2,0,2,1,0,1,0};
+
+	vector<Nourriture> listeNourritures;
+	Nourriture N("", 1, 1.0f, 1, 0);
+	for (int i = 0; i < nomNourritures.size(); i++)
+	{
+		N.setempoisonne(empoisonneNourritures[i]);
+		N.setnbRations(nbRationsNourritures[i]);
+		N.setnom(nomNourritures[i]);
+		N.setpoids(0.25f);
+		N.setprix(prixNourritures[i]);
+		listeNourritures.push_back(N);
+	}
+
 	
 	/*
 	// Temps avant changement de sprites (animation)

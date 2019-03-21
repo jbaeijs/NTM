@@ -26,7 +26,7 @@ public:
 private:
 
 	//Variables
-public:
+protected:
 
 	string nom;
 	unsigned int prix;

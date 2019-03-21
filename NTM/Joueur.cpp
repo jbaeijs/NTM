@@ -1,6 +1,6 @@
 #include "Joueur.h"
 
-Joueur::Joueur(sf::Texture* texture, sf::Vector2u nbImages, float tpsSwitch, float vitesse) :
+Joueur::Joueur(sf::Texture* texture, sf::Vector2u nbImages, float tpsSwitch, float vitesse, unsigned int po) :
 	animation(texture, nbImages, tpsSwitch)
 {
 	this->vitesse = vitesse;
@@ -10,6 +10,8 @@ Joueur::Joueur(sf::Texture* texture, sf::Vector2u nbImages, float tpsSwitch, flo
 	corps.setSize(sf::Vector2f(75.0f, 100.0f));
 	corps.setTexture(texture);
 	corps.setPosition(200.0f, 200.0f);
+
+	setpo(po);
 }
 
 
@@ -57,4 +59,14 @@ void Joueur::Update(float deltaTime)
 void Joueur::Draw(sf::RenderWindow& window)
 {
 	window.draw(corps);
+}
+
+void Joueur::setpo(unsigned int po)
+{
+	this->po = po;
+}
+
+unsigned int Joueur::getpo()
+{
+	return this->po;
 }
