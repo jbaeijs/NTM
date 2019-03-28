@@ -21,6 +21,10 @@ public:
 	unsigned int getLimiteMort();
 	unsigned int getLimiteNaissance();
 	unsigned int getNbSimulations();
+
+	float const getPosJoueurX() { return posJoueurX; }
+	float const getPosJoueurY() { return posJoueurY; }
+
 	void getMap(int map[largeurGrille][hauteurGrille]);
 
 	// Setters
@@ -52,6 +56,9 @@ private:
 	int map[largeurGrille][hauteurGrille];
 
 	float chanceVieInit;
+
+	float posJoueurX;
+	float posJoueurY;
 
 	unsigned int limiteMort;
 	unsigned int limiteNaissance;

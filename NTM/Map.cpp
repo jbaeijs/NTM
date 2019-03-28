@@ -277,6 +277,8 @@ void Map::placementEntreeSortie()
 			if ((map[x][y] == 2) && entree == 0) {
 				if (alea < 0.4) {
 					map[x][y] = 5;
+					posJoueurX = x;
+					posJoueurY = y;
 					entree = 1;
 				}
 			}

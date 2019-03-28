@@ -67,14 +67,20 @@ int main() {
 	}
 
 	// Initialisation de la fenêtre
-	sf::RenderWindow window(sf::VideoMode(Largeur, Hauteur), "Deutschlandais fou");
+	sf::RenderWindow window(sf::VideoMode(Largeur, Hauteur), "Deutschlandais fou", sf::Style::Fullscreen);
 
-	// Texture et sprite du bouton quitter
-	sf::Texture quitter;
-	if (!quitter.loadFromFile("assets/quitter.png"))
-		return EXIT_FAILURE;
-	sf::Sprite sQuitter(quitter);
-	sQuitter.setPosition((float)Largeur - 200, 0.0f);
+	// View handlers
+	sf::View view(sf::Vector2f(grille.getPosJoueurX(), grille.getPosJoueurY()), sf::Vector2f(Largeur, Hauteur));
+	view.zoom(0.20f);
+	sf::View viewMinimap(sf::FloatRect(0, 0, Largeur, Hauteur));
+
+	viewMinimap.setViewport(sf::FloatRect(0, 0, 0.3f, 0.3f));
+	view.setViewport(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
+	sf::RectangleShape minimapBG;
+	// TODO : a affiner
+	minimapBG.setSize(sf::Vector2f(Largeur / 1.75, Hauteur));
+	minimapBG.setFillColor(sf::Color::Yellow);
+
 
 	// Texture du joueur
 	sf::Texture textureJoueur;
@@ -100,34 +106,30 @@ int main() {
 			case sf::Event::Closed:
 				window.close();
 				break;
-
-			case sf::Event::MouseMoved:
-				
-				if (sQuitter.getGlobalBounds().contains(posSourisF)) {
-					sQuitter.setColor(sf::Color(255, 20, 20));
-				}
-				else {
-					sQuitter.setColor(sf::Color(255, 255, 255));
-				}
-				break;
-
-			case sf::Event::MouseButtonPressed:
-				if (sQuitter.getGlobalBounds().contains(posSourisF)) {
-					window.close();
-				}
-				break;
 			}
 
 		}
 
 		window.clear();
 
-		//Affichage bouton quitter
-		window.draw(sQuitter);
+		view.setCenter((grille.getPosJoueurY() * 20) + lPix, (grille.getPosJoueurX() * 20) + lPix);
+		window.setView(view);
 
 		// Affichage map
-		for (auto j = vRect.begin(); j != vRect.end(); j++) {
-			window.draw(*j);
+		for (auto &j : vRect) {
+			window.draw(j);
+		}
+
+		window.setView(viewMinimap);
+		window.draw(minimapBG);
+		for (auto &i: vRect) {
+			if (i.getFillColor() == sf::Color::Red) {
+				i.setFillColor(sf::Color::Green);
+			}
+			window.draw(i);
+			if (i.getFillColor() == sf::Color::Green) {
+				i.setFillColor(sf::Color::Red);
+			}
 		}
 
 		//joueur.Update(deltaTime);
