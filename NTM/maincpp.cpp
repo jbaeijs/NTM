@@ -81,12 +81,17 @@ int main() {
 	minimapBG.setSize(sf::Vector2f(Largeur / 1.75, Hauteur));
 	minimapBG.setFillColor(sf::Color::Black);
 
+	// Joueur 
+	sf::RectangleShape joueur;
+	joueur.setSize(sf::Vector2f(lPix, hPix));
+	joueur.setPosition((20 * grille.getPosJoueurY()) + hPix, (20 * grille.getPosJoueurX()) + lPix);
+	joueur.setFillColor(sf::Color::Magenta);
 
 	// Texture du joueur
-	sf::Texture textureJoueur;
+	/*sf::Texture textureJoueur;
 	if (!textureJoueur.loadFromFile("assets/spritesheet.png"))
 		return EXIT_FAILURE;
-	Joueur joueur(&textureJoueur, sf::Vector2u(9, 4), 0.1f, 150.0f);
+	Joueur joueur(&textureJoueur, sf::Vector2u(9, 4), 0.1f, 150.0f);*/
 
 	// Temps avant changement de sprites (animation)
 	/*float deltaTime = 0.0f;
@@ -115,10 +120,13 @@ int main() {
 		view.setCenter((grille.getPosJoueurY() * 20) + lPix, (grille.getPosJoueurX() * 20) + lPix);
 		window.setView(view);
 
+
 		// Affichage map
 		for (auto &j : vRect) {
 			window.draw(j);
 		}
+
+		window.draw(joueur);
 
 		window.setView(viewMinimap);
 		window.draw(minimapBG);
