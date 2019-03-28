@@ -79,7 +79,7 @@ int main() {
 	sf::RectangleShape minimapBG;
 	// TODO : a affiner
 	minimapBG.setSize(sf::Vector2f(Largeur / 1.75, Hauteur));
-	minimapBG.setFillColor(sf::Color::Yellow);
+	minimapBG.setFillColor(sf::Color::Black);
 
 
 	// Texture du joueur
