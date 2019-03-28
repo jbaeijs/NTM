@@ -82,10 +82,7 @@ int main() {
 	minimapBG.setFillColor(sf::Color::Black);
 
 	// Joueur 
-	sf::RectangleShape joueur;
-	joueur.setSize(sf::Vector2f(lPix, hPix));
-	joueur.setPosition((20 * grille.getPosJoueurY()) + hPix, (20 * grille.getPosJoueurX()) + lPix);
-	joueur.setFillColor(sf::Color::Magenta);
+	Joueur joueur(grille, lPix, hPix);
 
 	// Texture du joueur
 	/*sf::Texture textureJoueur;
@@ -94,12 +91,12 @@ int main() {
 	Joueur joueur(&textureJoueur, sf::Vector2u(9, 4), 0.1f, 150.0f);*/
 
 	// Temps avant changement de sprites (animation)
-	/*float deltaTime = 0.0f;
-	sf::Clock horloge;*/
+	float deltaTime = 0.0f;
+	sf::Clock horloge;
 
 	while (window.isOpen()) {
 
-		//deltaTime = horloge.restart().asSeconds();
+		deltaTime = horloge.restart().asSeconds();
 
 		// Récupérer position de la souris
 		sf::Vector2i posSouris = sf::Mouse::getPosition(window);
@@ -126,7 +123,8 @@ int main() {
 			window.draw(j);
 		}
 
-		window.draw(joueur);
+		joueur.Update(grille, deltaTime);
+		joueur.Draw(window);
 
 		window.setView(viewMinimap);
 		window.draw(minimapBG);
@@ -139,9 +137,8 @@ int main() {
 				i.setFillColor(sf::Color::Red);
 			}
 		}
+		joueur.Draw(window);
 
-		//joueur.Update(deltaTime);
-		//joueur.Draw(window);
 
 		window.display();
 	}

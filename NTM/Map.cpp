@@ -11,6 +11,10 @@ Map::Map(float chanceVieInit, unsigned int limiteMort, unsigned int limiteNaissa
 	this->tailleMin = tailleMin;
 }
 
+Map::Map()
+{
+}
+
 Map::~Map()
 {
 }
@@ -74,6 +78,16 @@ void Map::setLimiteNaissance(unsigned int limiteNaissance)
 void Map::setNbSimulations(unsigned int nbSimulations)
 {
 	this->nbSimulations = nbSimulations;
+}
+
+void Map::setPosJoueurY(float posJoueurY)
+{
+	this->posJoueurY = posJoueurY;
+}
+
+void Map::setPosJoueurX(float posJoueurX)
+{
+	this->posJoueurX = posJoueurX;
 }
 
 /*

@@ -1,60 +1,66 @@
 #include "Joueur.h"
+#include <windows.h>
 
-Joueur::Joueur(sf::Texture* texture, sf::Vector2u nbImages, float tpsSwitch, float vitesse) :
-	animation(texture, nbImages, tpsSwitch)
+using namespace std;
+
+Joueur::Joueur(Map &grille, unsigned int lPix, unsigned int hPix)
 {
-	this->vitesse = vitesse;
-	colonne = 0;
-	droite = true;
-
-	corps.setSize(sf::Vector2f(75.0f, 100.0f));
-	corps.setTexture(texture);
-	corps.setPosition(200.0f, 200.0f);
+	this->posX = grille.getPosJoueurX();
+	this->posY = grille.getPosJoueurY();
+	this->corps.setSize(sf::Vector2f(lPix, hPix));
+	this->corps.setFillColor(sf::Color::Magenta);
+	this->corps.setPosition((20 * grille.getPosJoueurY()) + hPix, (20 * grille.getPosJoueurX()) + lPix);
+	this->tpsTotal = 0.0f;
+	this->tpsSwitch = 0.10;
 }
-
 
 Joueur::~Joueur()
 {
 }
 
-void Joueur::Update(float deltaTime)
+void Joueur::Update(Map &grille, float deltaTime)
 {
-	sf::Vector2f mouvement(0.0f, 0.0f);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		mouvement.x += vitesse * deltaTime;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		mouvement.x -= vitesse * deltaTime;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		mouvement.y -= vitesse * deltaTime;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		mouvement.y += vitesse * deltaTime;
+	tpsTotal += deltaTime;
 
-	if ((mouvement.x == 0.0f) && (mouvement.y == 0.0f)) {
-		colonne = 2;
+	int map[grille.largeurGrille][grille.hauteurGrille] = { {0} };
+	grille.getMap(map);
+
+	float posX = grille.getPosJoueurX();
+	float posY = grille.getPosJoueurY();
+
+	if (tpsTotal >= tpsSwitch) {
+		tpsTotal -= tpsSwitch;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+			if (map[int(posX) - 1][int(posY)] != 1) {
+				corps.move(0, -20);
+				grille.setPosJoueurX(grille.getPosJoueurX() - 1);
+			}
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+			if (map[int(posX) + 1][int(posY)] != 1) {
+				corps.move(0, 20);
+				grille.setPosJoueurX(grille.getPosJoueurX() + 1);
+			}
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+			if (map[int(posX)][int(posY) - 1] != 1) {
+				corps.move(-20, 0);
+				grille.setPosJoueurY(grille.getPosJoueurY() - 1);
+			}
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+			if (map[int(posX)][int(posY) + 1] != 1) {
+				corps.move(20, 0);
+				grille.setPosJoueurY(grille.getPosJoueurY() + 1);
+			}
+		}
 	}
-	else {
-
-		if (mouvement.y < 0.0f) {
-			colonne = 0;
-		}
-		else if (mouvement.y > 0.0f) {
-			colonne = 2;
-		}
-		else if (mouvement.x < 0.0f) {
-			colonne = 1;
-		}
-		else {
-			colonne = 3;
-		}
-
-	}
-	animation.Update(colonne, deltaTime);
-	corps.setTextureRect(animation.rect);
-	corps.move(mouvement);
 }
 
-void Joueur::Draw(sf::RenderWindow& window)
+void Joueur::Draw(sf::RenderWindow & window)
 {
 	window.draw(corps);
 }
+
+

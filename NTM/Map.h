@@ -9,6 +9,7 @@ class Map
 // Fonctions
 public:
 	Map(float chanceVieInit, unsigned int limiteMort, unsigned int limiteNaissance, unsigned int nbSimulations, unsigned int tailleMin);
+	Map();
 	~Map();
 
 	unsigned int const static largeurGrille = 50;
@@ -32,6 +33,9 @@ public:
 	void setLimiteMort(unsigned int limiteMort);
 	void setLimiteNaissance(unsigned int limiteNaissance);
 	void setNbSimulations(unsigned int nbSimulations);
+
+	void setPosJoueurY(float posJoueurY);
+	void setPosJoueurX(float posJoueurX);
 
 	void mapInit();
 	int nbVoisinsVivants(int x, int y);

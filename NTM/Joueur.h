@@ -1,21 +1,25 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Animation.h"
+#include "Map.h"
+#include <windows.h>
 
 class Joueur
 {
 public:
-	Joueur(sf::Texture* texture, sf::Vector2u nbImages, float tpsSwitch, float vitesse);
+	Joueur(Map &grille, unsigned int lPix, unsigned int hPix);
 	~Joueur();
 
-	void Update(float deltaTime);
-	void Draw(sf::RenderWindow& window);
+	void Update(Map & grille, float deltaTime);
+
+	void Draw(sf::RenderWindow &window);
 
 public: 
+	float posX;
+	float posY;
+
+	float tpsTotal;
+	float tpsSwitch;
+
 	sf::RectangleShape corps;
-	Animation animation;
-	unsigned int colonne;
-	float vitesse;
-	bool droite;
 };
 
