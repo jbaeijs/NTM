@@ -11,7 +11,7 @@ Joueur::Joueur(Map &grille, unsigned int lPix, unsigned int hPix)
 	this->corps.setFillColor(sf::Color::Magenta);
 	this->corps.setPosition((20 * grille.getPosJoueurY()) + hPix, (20 * grille.getPosJoueurX()) + lPix);
 	this->tpsTotal = 0.0f;
-	this->tpsSwitch = 0.10;
+	this->tpsSwitch = 0.20;
 }
 
 Joueur::~Joueur()
@@ -37,19 +37,19 @@ void Joueur::Update(Map &grille, float deltaTime)
 				grille.setPosJoueurX(grille.getPosJoueurX() - 1);
 			}
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 			if (map[int(posX) + 1][int(posY)] != 1) {
 				corps.move(0, 20);
 				grille.setPosJoueurX(grille.getPosJoueurX() + 1);
 			}
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			if (map[int(posX)][int(posY) - 1] != 1) {
 				corps.move(-20, 0);
 				grille.setPosJoueurY(grille.getPosJoueurY() - 1);
 			}
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 			if (map[int(posX)][int(posY) + 1] != 1) {
 				corps.move(20, 0);
 				grille.setPosJoueurY(grille.getPosJoueurY() + 1);
