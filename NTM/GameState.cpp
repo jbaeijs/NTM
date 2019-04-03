@@ -13,7 +13,7 @@ GameState::GameState(float largeur, float hauteur):
 {
 	this->largeur = largeur;
 	this->hauteur = hauteur;
-	this->gameState = 1;
+	this->gameState = 0;
 	this->gameLoaded = false;
 
 	viewJeu.zoom(0.20f);
@@ -30,16 +30,25 @@ GameState::~GameState()
 {
 }
 
-void GameState::Update()
+void GameState::Update(float deltaTime)
 {
+	switch (gameState)
+	{
+	case 2 :
+		joueur.Update(grille, deltaTime);
+		viewJeu.setCenter((grille.getPosJoueurY() * 20) + 10, (grille.getPosJoueurX() * 20) + 10);
+		break;
+	}
+	
 }
 
-void GameState::Draw(sf::RenderWindow & window, float deltaTime)
+void GameState::Draw(sf::RenderWindow & window)
 {
 	switch (this->gameState)
 	{
 	case 0 : 
-		cout << "Menu" << endl;
+		cout << "Menu" << endl << "1) Jouer " << endl << "2) Gni" << endl << "3) Quitter ce sublime jeu et faire de moi une sous-merde" << endl << endl << "Vous avez choisi de jouer : Excellent" << endl;
+		gameState++;
 		break;
 	
 	case 1 : 
@@ -86,13 +95,11 @@ void GameState::Draw(sf::RenderWindow & window, float deltaTime)
 
 	case 2 :
 		window.clear();
-		viewJeu.setCenter((grille.getPosJoueurY() * 20) + 10, (grille.getPosJoueurX() * 20) + 10);
 		window.setView(viewJeu);
 		// Affichage map
 		for (auto &j : vRect) {
 			window.draw(j);
 		}
-		joueur.Update(grille, deltaTime);
 		joueur.Draw(window);
 
 		window.setView(viewMinimap);
