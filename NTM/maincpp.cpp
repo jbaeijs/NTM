@@ -21,7 +21,7 @@ int main() {
 	GameState game(Largeur, Hauteur);
 
 	// Initialisation de la fenêtre
-	sf::RenderWindow window(sf::VideoMode(Largeur, Hauteur), "Deutschlandais fou", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode(Largeur, Hauteur), "Angband", sf::Style::Fullscreen);
 
 	float deltaTime = 0.0f;
 	sf::Clock horloge;
@@ -44,7 +44,8 @@ int main() {
 
 		}
 
-		game.Draw(window, deltaTime);
+		game.Update(deltaTime);
+		game.Draw(window);
 	}
 
 	return EXIT_SUCCESS;

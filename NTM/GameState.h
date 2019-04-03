@@ -10,8 +10,8 @@ public:
 	GameState(float largeur, float hauteur);
 	~GameState();
 
-	void Update();
-	void Draw(sf::RenderWindow &window, float deltaTime);
+	void Update(float deltaTime);
+	void Draw(sf::RenderWindow &window);
 
 private:
 
