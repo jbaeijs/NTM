@@ -21,7 +21,6 @@ Joueur::~Joueur()
 void Joueur::Update(Map &grille, float deltaTime)
 {
 	this->corps.setPosition((20 * grille.getPosJoueurY()) + 10, (20 * grille.getPosJoueurX()) + 10);
-	cout << " Update Marche " << endl;
 	tpsTotal += deltaTime;
 
 	int map[grille.largeurGrille][grille.hauteurGrille] = { {0} };
