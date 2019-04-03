@@ -243,7 +243,6 @@ void Map::placementTresor()
 			float alea = float(rand() % 100);
 			alea = alea / 100;
 			if ((map[x - 1][y] == 2) && (map[x + 1][y] == 1) && (map[x][y - 1] == 1) && (map[x][y + 1] == 1)) {
-				cout << alea << endl;
 				if ((alea < 0.1) && (nbTresorCourExt < nbTresorsMaxExt)) {
 					map[x][y] = 4;
 					nbTresorCourExt++;
@@ -251,20 +250,17 @@ void Map::placementTresor()
 			}
 			else if ((map[x - 1][y] == 1) && (map[x + 1][y] == 2) && (map[x][y - 1] == 1) && (map[x][y + 1] == 1)) {
 				if ((alea < 0.1) && (nbTresorCourExt < nbTresorsMaxExt)) {
-					cout << alea << endl;
 					map[x][y] = 4;
 					nbTresorCourExt++;
 				}
 			} 
 			else if ((map[x - 1][y] == 1) && (map[x + 1][y] == 1) && (map[x][y - 1] == 2) && (map[x][y + 1] == 1)) {
 				if ((alea < 0.1) && (nbTresorCourExt < nbTresorsMaxExt)) {
-					cout << alea / 100 << endl;
 					map[x][y] = 4;
 				}
 			}
 			else if ((map[x - 1][y] == 1) && (map[x + 1][y] == 1) && (map[x][y - 1] == 1) && (map[x][y + 1] == 2)) {
 				if ((alea < 0.1) && (nbTresorCourExt < nbTresorsMaxExt)) {
-					cout << alea / 100 << endl;
 					map[x][y] = 4;
 					nbTresorCourExt++;
 				}

@@ -13,6 +13,9 @@ public:
 
 	void Draw(sf::RenderWindow &window);
 
+	void setPosX(float posX) { this->posX = posX; };
+	void setPosY(float posY) { this->posY = posY; };
+
 public: 
 	float posX;
 	float posY;

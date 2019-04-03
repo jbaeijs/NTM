@@ -5,8 +5,6 @@ using namespace std;
 
 Joueur::Joueur(Map &grille, unsigned int lPix, unsigned int hPix)
 {
-	this->posX = grille.getPosJoueurX();
-	this->posY = grille.getPosJoueurY();
 	this->corps.setSize(sf::Vector2f(lPix, hPix));
 	this->corps.setFillColor(sf::Color::Magenta);
 	this->corps.setPosition((20 * grille.getPosJoueurY()) + hPix, (20 * grille.getPosJoueurX()) + lPix);
@@ -18,9 +16,12 @@ Joueur::~Joueur()
 {
 }
 
+
+/* TODO : Revoir*/
 void Joueur::Update(Map &grille, float deltaTime)
 {
-
+	this->corps.setPosition((20 * grille.getPosJoueurY()) + 10, (20 * grille.getPosJoueurX()) + 10);
+	cout << " Update Marche " << endl;
 	tpsTotal += deltaTime;
 
 	int map[grille.largeurGrille][grille.hauteurGrille] = { {0} };
