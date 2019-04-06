@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
 #include "Animation.h"
 #include "Joueur.h"
 #include "Map.h"
@@ -23,6 +24,13 @@ int main() {
 	// Initialisation de la fenêtre
 	sf::RenderWindow window(sf::VideoMode(Largeur, Hauteur), "Angband", sf::Style::Fullscreen);
 
+	sf::Music musique;
+	if (!musique.openFromFile("sounds/Ouverture.wav"))
+		cout << "musique erreur"; // error
+
+	//musique.play();
+	//musique.setLoop(true);
+
 	float deltaTime = 0.0f;
 	sf::Clock horloge;
 
@@ -44,7 +52,7 @@ int main() {
 
 		}
 
-		game.Update(deltaTime);
+		game.Update(deltaTime, window);
 		game.Draw(window);
 	}
 

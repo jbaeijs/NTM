@@ -9,7 +9,8 @@ GameState::GameState(float largeur, float hauteur):
 	grille(0.40f, 4, 3, 3, 900),
 	viewJeu(sf::Vector2f(0, 0), sf::Vector2f(largeur, hauteur)),
 	viewMinimap(sf::FloatRect(0, 0, largeur, hauteur)),
-	joueur(grille, 10, 10)
+	joueur(grille, 10, 10),
+	menu(largeur, hauteur)
 {
 	this->largeur = largeur;
 	this->hauteur = hauteur;
@@ -30,12 +31,13 @@ GameState::~GameState()
 {
 }
 
-void GameState::Update(float deltaTime)
+void GameState::Update(float deltaTime, sf::RenderWindow& window)
 {
 	switch (gameState)
 	{
 	case 2 :
 		joueur.Update(grille, deltaTime);
+		int menuOui = menu.Update(window);
 		viewJeu.setCenter((grille.getPosJoueurY() * 20) + 10, (grille.getPosJoueurX() * 20) + 10);
 		break;
 	}

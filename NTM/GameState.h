@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Map.h"
 #include "Joueur.h"
+#include "Menu.h"
 
 class GameState
 {
@@ -10,7 +11,7 @@ public:
 	GameState(float largeur, float hauteur);
 	~GameState();
 
-	void Update(float deltaTime);
+	void Update(float deltaTime, sf::RenderWindow& window);
 	void Draw(sf::RenderWindow &window);
 
 private:
@@ -33,7 +34,8 @@ private:
 	sf::View viewJeu, viewMinimap;
 
 	Map grille;
-
 	Joueur joueur;
+	Menu menu;
+
 };
 
